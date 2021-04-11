@@ -932,7 +932,12 @@ static void rtsp_parse_transport(AVFormatContext *s,
             }
             th->transport = RTSP_TRANSPORT_RAW;
         }
-        if (!av_strcasecmp(lower_transport, "TCP"))
+        /* will need to replace with logcat call on android */
+        printf("RTSP_LOWER_TRANSPORT_TCP Patch Applied\n"); /* RTSPTransportField */
+        /* making ffmpeg forgiving when TCP is omitted - Yoose Ip Camera Fix*/
+        /* assuming it was missing it but ... better compare with original request
+        to see it is the same lower_transport */
+        if (!av_strcasecmp(lower_transport, "TCP") || !av_strcasecmp(lower_transport, ""))
             th->lower_transport = RTSP_LOWER_TRANSPORT_TCP;
         else
             th->lower_transport = RTSP_LOWER_TRANSPORT_UDP;
